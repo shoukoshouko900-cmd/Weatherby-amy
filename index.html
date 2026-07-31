@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Makes the website responsive on phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Website title -->
+    <title>WeathertoldbyAmy</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline id="bg-video">
+    <source src="videos/background.mp4" type="video/mp4">
+</video>
+
+<!-- Search Box -->
+<div class="search-box">
+
+    <div class="search-wrapper">
+        <input
+            type="text"
+            id="cityInput"
+            placeholder="Enter City / State :)"
+            autocomplete="off"
+            spellcheck="false">
+
+        <div id="suggestions"></div>
+    </div>
+
+
+    <button id="searchBtn">Search</button>
+
+
+    <div class="time-container">
+        <span id="currentTime"></span>
+    </div>
+
+</div>
+
+    <button id="searchBtn">
+        Search
+    </button>
+
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+    <h1>🌤 天気予報</h1>
+    <p class="subtitle">Weather of Sky</p>
+
+    <div class="weather-card">
+
+        <img id="weatherIcon" src="icons/clear-day.svg" alt="Weather Icon">
+
+        <h2 id="temperature">--°C</h2>
+
+        <h3 id="city">Search a city</h3>
+
+        <p id="description">Weather Description</p>
+
+        <div class="details">
+
+            <div class="box">
+                <h4>Humidity</h4>
+                <p id="humidity">--</p>
+            </div>
+
+            <div class="box">
+                <h4>Wind</h4>
+                <p id="wind">--</p>
+            </div>
+
+            <div class="box">
+                <h4>Pressure</h4>
+                <p id="pressure">--</p>
+            </div>
+
+            <div class="box">
+                <h4>Feels Like</h4>
+                <p id="feelsLike">--</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
