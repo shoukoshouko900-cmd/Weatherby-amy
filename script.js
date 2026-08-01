@@ -58,7 +58,6 @@ cityInput.addEventListener("keydown", (event) => {
         searchBtn.click();
 
     }
-
 });
 function animateTemperature(targetTemp) {
 
