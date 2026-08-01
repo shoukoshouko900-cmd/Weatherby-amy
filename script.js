@@ -8,7 +8,7 @@ const API_KEY = "87c055e05de35f99d12a248b6b19645f";
 // =============================
 // HTML Elements
 // =============================
-
+SS
 const searchBtn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("cityInput");
 const temperature = document.getElementById("temperature");
