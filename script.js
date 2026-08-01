@@ -11,69 +11,16 @@ const API_KEY = "87c055e05de35f99d12a248b6b19645f";
 
 const searchBtn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("cityInput");
-const suggestions = document.getElementById("suggestions");
-console.log("Autocomplete loaded");
-cityInput.addEventListener("input", async ()=>{
-
-    let query = cityInput.value;
-
-    suggestions.innerHTML="";
-
-    if(query.length < 2){
-        return;
-    }
-
-
-    const response = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=87c055e05de35f99d12a248b6b19645f`
-    );
-
-
-    const cities = await response.json();
-
-if(cities.length === 0){
-    suggestions.style.display = "none";
-    return;
-}
-
-
-    cities.forEach(place=>{
-
-        let option = document.createElement("div");
-
-        option.className="suggestion-item";
-
-
-        option.textContent =
-        `${place.name}, ${place.state || ""}, ${place.country}`;
-
-
-        option.onclick=()=>{
-
-    cityInput.value = place.name;
-
-    suggestions.innerHTML = "";
-    suggestions.style.display = "none";
-
-    searchBtn.click();
-};
-
-
-        suggestions.appendChild(option);
-
-    });
-
-});
-suggestions.style.display = "block";
 const temperature = document.getElementById("temperature");
 const city = document.getElementById("city");
 const description = document.getElementById("description");
+const country = document.getElementById("country");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
 const pressure = document.getElementById("pressure");
 const feelsLike = document.getElementById("feelsLike");
 const weatherIcon = document.getElementById("weatherIcon");
-
+const errorSign = document.getElementById("errorSign");
 
 // =============================
 // Search Button
@@ -114,7 +61,25 @@ cityInput.addEventListener("keydown", (event) => {
     }
 
 });
+function animateTemperature(targetTemp) {
 
+    let current = 0;
+    targetTemp = Math.round(targetTemp);
+
+    const timer = setInterval(() => {
+
+        current++;
+
+        temperature.innerHTML = current + "°C";
+
+        if (current >= targetTemp) {
+            clearInterval(timer);
+            temperature.innerHTML = targetTemp + "°C";
+        }
+
+    }, 30);
+
+}
 // =============================
 // Fetch Weather
 // =============================
@@ -129,8 +94,12 @@ async function getWeather(cityName){
         const response = await fetch(url);
 
         const data = await response.json();
-        if (data.cod !== 200) {
+        if(data.cod != 200){
+
+    showErrorSign();   // <-- Add this line
+
     alert("City not found!");
+
     return;
 }
 
@@ -156,11 +125,12 @@ async function getWeather(cityName){
 
 function updateWeather(data){
 
-    temperature.innerHTML =
-    Math.round(data.main.temp) + "°C";
+animateTemperature(data.main.temp);
 
     city.innerHTML =
     data.name;
+    const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+country.innerHTML = regionNames.of(data.sys.country);
 
     description.innerHTML =
     data.weather[0].description;
@@ -218,3 +188,18 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+// =============================
+// Error Sign Animation
+// =============================
+
+function showErrorSign(){
+
+    errorSign.classList.add("show");
+
+    setTimeout(()=>{
+
+        errorSign.classList.remove("show");
+
+    },2000);
+
+}
